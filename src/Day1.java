@@ -15,9 +15,9 @@ public class Day1 {
     public static void main(String[] args) {
         try {
             Stream<String> input = InputReader.readAllLines("src/input/day1a.txt");
-            int sum = input
-                    .mapToInt(Integer::valueOf)
-                    .map(Day1::calcFuel)
+            int sum = input.mapToInt(Integer::valueOf)
+//                    .map(i -> Math.floorDiv(i, 3) -2)
+                    .map(Day1::calcFuelB)
                     .sum();
             System.out.println(sum);
         } catch (IOException e) {
@@ -27,5 +27,17 @@ public class Day1 {
 
     public static int calcFuel(int mass) {
         return Math.floorDiv(mass, 3) - 2;
+    }
+
+    public static int calcFuelB(int mass) {
+        int a = calcFuel(mass);
+
+        if(a > 0) {
+            int b = calcFuelB(a);
+            if(b >= 1) {
+                a += b;
+            }
+        }
+        return a;
     }
 }
